@@ -85,6 +85,8 @@ public class PlayState extends State {
 		camera.setToOrtho(false, MAP_SIZE_X/4, MAP_SIZE_Y/4);
 		camera.position.x = MAP_SIZE_X/2;
 		camera.position.y = MAP_SIZE_Y/2;
+		camera.setZoomMax(4);
+		camera.setZoomStep(0.2f);
 		setupButtons();
 		setupCreatures();
 		setupCreatureButtons();
@@ -180,9 +182,9 @@ public class PlayState extends State {
 
 			@Override
 			public void zoom(float initialDistance, float distance) {
-				if(camera.zoom > camera.ZOOM_MIN && camera.zoom < camera.ZOOM_MAX) {
+				if(camera.zoom > camera.getZoomMin() && camera.zoom < camera.getZoomMax()) {
 					float zoomValue = camera.zoom + (1 - distance/initialDistance)*0.05f;
-					if(zoomValue > camera.ZOOM_MIN && zoomValue < camera.ZOOM_MAX) {
+					if(zoomValue > camera.getZoomMin() && zoomValue < camera.getZoomMax()) {
 						camera.zoom = zoomValue;
 					}
 				}

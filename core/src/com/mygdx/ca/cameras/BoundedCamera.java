@@ -6,9 +6,9 @@ import com.badlogic.gdx.math.collision.BoundingBox;
 
 public class BoundedCamera extends OrthographicCamera {
 	private BoundingBox left, right, top, bottom = null;
-	public float ZOOM_MAX = 1.1f;
-	public float ZOOM_MIN = 0.1f;
-	public float ZOOM_STEP = 0.1f;
+	private float zoomMax = 1.1f;
+	private float zoomMin = 0.1f;
+	private float zoomStep = 0.1f;
 
 	public BoundedCamera(int left, int bottom, int width, int height) {
 		int top = bottom + height;
@@ -45,5 +45,33 @@ public class BoundedCamera extends OrthographicCamera {
 	    if (frustum.boundsInFrustum(left) || frustum.boundsInFrustum(right) || frustum.boundsInFrustum(top) || frustum.boundsInFrustum(bottom)) {
 	        position.set(lastPosition);
 	    }
+	}
+
+	public float getZoomMax() {
+		return zoomMax;
+	}
+
+	public void setZoomMax(float zoomMax) {
+		if(zoomMax < 6 && zoomMax > 1) {
+			this.zoomMax = zoomMax;
+		}
+	}
+
+	public float getZoomMin() {
+		return zoomMin;
+	}
+
+	public void setZoomMin(float zoomMin) {
+		if(zoomMin < zoomMax && zoomMin > 0) {
+			this.zoomMin = zoomMin;
+		}
+	}
+
+	public float getZoomStep() {
+		return zoomStep;
+	}
+
+	public void setZoomStep(float zoomStep) {
+		this.zoomStep = zoomStep;
 	}
 }
