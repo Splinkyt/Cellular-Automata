@@ -142,7 +142,9 @@ public class GameOfLifeCellularAutomata implements CellularAutomataFactory {
 	}
 	
 	private void makeAlive(int i, int j) {
-		cells[i][j] = 1;
+		if((i < cells.length && i >= 0) && (j < cells[0].length && j >= 0)) {
+			cells[i][j] = 1;
+		}
 	}
 	
 	private void makeDead(int i, int j) {
