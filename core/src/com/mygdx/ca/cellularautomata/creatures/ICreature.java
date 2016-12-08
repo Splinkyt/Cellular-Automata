@@ -1,5 +1,9 @@
 package com.mygdx.ca.cellularautomata.creatures;
 
+import java.util.ArrayList;
+
+import com.badlogic.gdx.math.Vector2;
+
 public interface ICreature {
-	int[][] getLiveCells(int i, int j);
+	ArrayList<Vector2> getLiveCells(int i, int j);
 }

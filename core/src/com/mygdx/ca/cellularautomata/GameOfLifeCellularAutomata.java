@@ -1,5 +1,7 @@
 package com.mygdx.ca.cellularautomata;
 
+import java.util.ArrayList;
+
 import com.badlogic.gdx.math.Vector2;
 import com.mygdx.ca.cellularautomata.creatures.Amoeba;
 import com.mygdx.ca.cellularautomata.creatures.ICreature;
@@ -39,63 +41,78 @@ public class GameOfLifeCellularAutomata implements CellularAutomataFactory {
 		int[][] newCells = new int[numberOfCellsX][numberOfCellsY];
 		for(int i = 0; i < cells.length; i++) {
 			for(int j = 0; j < cells[i].length; j++) {
-				int left;
-				int right;
-				int top;
-				int bot;
-				int topLeft;
-				int topRight;
-				int botLeft;
-				int botRight;
 				int me;
 				int sum;
-				try {
-					left = cells[i - 1][j];
-				} catch (ArrayIndexOutOfBoundsException e) {
-					left = 0;
-				}
-				try {
-					right = cells[i + 1][j];
-				} catch (ArrayIndexOutOfBoundsException e) {
-					right = 0;
-				}
-				try {
-					top = cells[i][j + 1];
-				} catch (ArrayIndexOutOfBoundsException e) {
-					top = 0;
-				}
-				try {
-					bot = cells[i][j - 1];
-				} catch (ArrayIndexOutOfBoundsException e) {
-					bot = 0;
-				}
-				try {
-					topLeft = cells[i - 1][j + 1];
-				} catch (ArrayIndexOutOfBoundsException e) {
-					topLeft = 0;
-				}
-				try {
-					topRight = cells[i + 1][j + 1];
-				} catch (ArrayIndexOutOfBoundsException e) {
-					topRight = 0;
-				}
-				try {
-					botLeft = cells[i - 1][j - 1];
-				} catch (ArrayIndexOutOfBoundsException e) {
-					botLeft = 0;
-				}
-				try {
-					botRight = cells[i + 1][j - 1];
-				} catch (ArrayIndexOutOfBoundsException e) {
-					botRight = 0;
-				}
 				me = cells[i][j];
-				sum = left + right + top + bot + topLeft + topRight + botLeft + botRight;
+				sum = neighborsSum(i, j);
 				newCells[i][j] = applyRules(me, sum);
 			}
 			
 		}
 		cells = newCells;
+	}
+	
+	private int neighborsSum(int i, int j) {
+		int left;
+		int right;
+		int top;
+		int bot;
+		int botLeft;
+		int topLeft;
+		int topRight;
+		int botRight;
+		
+		if(i - 1 >= 0) {
+			left = cells[i - 1][j];
+		}
+		else {
+			left = 0;
+		}
+		if(i + 1 <= cells.length - 1) {
+			right = cells[i + 1][j];
+		}
+		else {
+			right = 0;
+		}
+		if(j - 1 >=0) {
+			bot = cells[i][j - 1];
+		}
+		else {
+			bot = 0;
+		}
+		if(j + 1 <= cells[0].length - 1) {
+			top = cells[i][j + 1];
+		}
+		else {
+			top = 0;
+		}
+		if(i - 1 >= 0 && j - 1 >=0) {
+			botLeft = cells[i - 1][j - 1];
+		}
+		else {
+			botLeft = 0;
+		}
+		if(i - 1 >= 0 && j + 1 <= cells[0].length - 1) {
+			topLeft = cells[i - 1][j + 1];
+		}
+		else {
+			topLeft = 0;
+		}
+		if(i + 1 <= cells.length - 1 && j + 1 <= cells[0].length - 1) {
+			topRight = cells[i + 1][j + 1];
+		}
+		else {
+			topRight = 0;
+		}
+		if(i + 1 <= cells.length - 1 && j - 1 >=0) {
+			botRight = cells[i + 1][j - 1];
+		}
+		else {
+			botRight = 0;
+		}
+		
+		return left + right + top + bot + topLeft + topRight + botLeft + botRight;
+		
 	}
 	
 	private int applyRules(int me, int sum) {
@@ -118,13 +135,9 @@ public class GameOfLifeCellularAutomata implements CellularAutomataFactory {
 	
 	@Override
 	public void spawnCreature(int i, int j) {
-		int[][] liveCells = creature.getLiveCells(i, j);
-		for(int i2 = 0; i2 < liveCells.length; i2++) {
-			for(int j2 = 0; j2 < liveCells[i].length; j2++) {
-				if(liveCells[i2][j2] == 1) {
-					makeAlive(i2, j2);
-				}
-			}
+		ArrayList<Vector2> liveCells = creature.getLiveCells(i, j);
+		for(Vector2 cell : liveCells) {
+			makeAlive((int)cell.x, (int)cell.y);
 		}
 	}
 	
