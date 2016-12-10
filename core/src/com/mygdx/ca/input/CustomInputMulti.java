@@ -6,7 +6,6 @@ import com.mygdx.ca.cameras.BoundedCamera;
 public class CustomInputMulti extends InputMultiplexer {
 
 	private BoundedCamera camera;
-	private float lastZoom;
 	
 	public CustomInputMulti(BoundedCamera camera) {
 		this.camera = camera;
@@ -15,7 +14,6 @@ public class CustomInputMulti extends InputMultiplexer {
 	@Override
 	public boolean scrolled(int amount) {
 		
-		lastZoom = camera.zoom;
 		if(camera.zoom > camera.getZoomMin() && camera.zoom < camera.getZoomMax()) {
 			camera.zoom += amount * camera.getZoomStep();
 		}

@@ -9,42 +9,44 @@ public class BoundedCamera extends OrthographicCamera {
 	private float zoomMax = 1.1f;
 	private float zoomMin = 0.1f;
 	private float zoomStep = 0.1f;
+	private float translateSpeed = 12;
 
 	public BoundedCamera(int left, int bottom, int width, int height) {
 		int top = bottom + height;
 		int right = left + width;
-		this.left = new BoundingBox(new Vector3(left - 2, 0, 0), new Vector3(left -1, top, 0));
-		this.right = new BoundingBox(new Vector3(right + 1, 0, 0), new Vector3(right + 2, top, 0));
-		this.top = new BoundingBox(new Vector3(0, top + 1, 0), new Vector3(right, top + 2, 0));
-		this.bottom = new BoundingBox(new Vector3(0, bottom - 1, 0), new Vector3(right, bottom - 2, 0));
+		this.left = new BoundingBox(new Vector3(left - 10, 0, 0), new Vector3(left - 10, top, 0));
+		this.right = new BoundingBox(new Vector3(right + 10, 0, 0), new Vector3(right + 10, top, 0));
+		this.top = new BoundingBox(new Vector3(0, top + 10, 0), new Vector3(right, top + 10, 0));
+		this.bottom = new BoundingBox(new Vector3(0, bottom - 10, 0), new Vector3(right, bottom - 10, 0));
 	}
 	
-	private Vector3 lastPosition = new Vector3();
+	
+	@Override
+	public void update(boolean updateFrustum) {
+		if(!isInBounds()) {
+			if(frustum.boundsInFrustum(left)) {
+				translate(-translateSpeed, 0);
+			}
+			if(frustum.boundsInFrustum(right)) {
+				translate(translateSpeed, 0);
+			}
+			if(frustum.boundsInFrustum(top)) {
+				translate(0, -translateSpeed);
+			}
+			if(frustum.boundsInFrustum(bottom)) {
+				translate(0, translateSpeed);
+			}
+		}
+		super.update(updateFrustum);
+	}
+
 	@Override
 	public void translate(float x, float y) { 
-	    lastPosition.set(position.x, position.y, 0);
 	    super.translate(-x, y);
-	}
-
-	@Override
-	public void update() {
-		super.update();
-	}
-
-	public void translateSafe(float x, float y) {
-	    translate(x, y);
-	    update();
-	    ensureBounds();
-	    update();
 	}
 
 	public boolean isInBounds() {
 		return !(frustum.boundsInFrustum(left) || frustum.boundsInFrustum(right) || frustum.boundsInFrustum(top) || frustum.boundsInFrustum(bottom));
-	}
-	private void ensureBounds() {
-	    if (frustum.boundsInFrustum(left) || frustum.boundsInFrustum(right) || frustum.boundsInFrustum(top) || frustum.boundsInFrustum(bottom)) {
-	        position.set(lastPosition);
-	    }
 	}
 
 	public float getZoomMax() {

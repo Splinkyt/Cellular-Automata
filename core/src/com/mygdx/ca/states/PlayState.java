@@ -194,7 +194,7 @@ public class PlayState extends State {
 			public void pan(Vector2 touchPoint, float x, float y, float deltaX, float deltaY) {
 				if(!(touchPoint.x < sideBar.getWidth())) {
 					System.out.println("X:" + camera.position.x + "Y:" + camera.position.y);
-					camera.translateSafe(deltaX/2, deltaY/2);
+					camera.translate(deltaX/2, deltaY/2);
 				}
 			}
 
