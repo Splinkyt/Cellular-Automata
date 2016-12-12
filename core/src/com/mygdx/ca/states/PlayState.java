@@ -17,10 +17,12 @@ import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer.ShapeType;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.math.Vector3;
+import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.ui.ScrollPane;
 import com.badlogic.gdx.scenes.scene2d.ui.SelectBox;
+import com.badlogic.gdx.scenes.scene2d.ui.Slider;
 import com.badlogic.gdx.scenes.scene2d.ui.Table;
 import com.badlogic.gdx.scenes.scene2d.ui.TextArea;
 import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
@@ -28,6 +30,8 @@ import com.badlogic.gdx.scenes.scene2d.ui.TextButton.TextButtonStyle;
 import com.badlogic.gdx.scenes.scene2d.ui.WidgetGroup;
 import com.badlogic.gdx.scenes.scene2d.ui.ButtonGroup;
 import com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable;
+import com.badlogic.gdx.scenes.scene2d.utils.ChangeListener.ChangeEvent;
+import com.badlogic.gdx.scenes.scene2d.utils.ChangeListener;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import com.mygdx.ca.cameras.BoundedCamera;
 import com.mygdx.ca.cellularautomata.CellularAutomataFactory;
@@ -72,22 +76,19 @@ public class PlayState extends State {
 	private int BUTTON_SIZE_Y;
 	private int MAP_SIZE_X = 2000;
 	private int MAP_SIZE_Y = 1200;
-	private int BOUND_LEFT = 0;
-	private int BOUND_BOT = 0;
+	private int BOUND_LEFT = 250;
+	private int BOUND_BOT = 150;
 	
 	public PlayState(GameStateManager gsm, CellularAutomataFactory ca, MenuFactory mf) {
 		super(gsm);
 		this.ca = ca;
 		this.ca.setMap(MAP_SIZE_X, MAP_SIZE_Y);
-		
 		this.mf = mf;
 		camera = new BoundedCamera(BOUND_LEFT, BOUND_BOT, MAP_SIZE_X, MAP_SIZE_Y);
 		camera.setToOrtho(false, MAP_SIZE_X/4, MAP_SIZE_Y/4);
 		camera.position.x = MAP_SIZE_X/2;
 		camera.position.y = MAP_SIZE_Y/2;
-		camera.setZoomMax(4);
-		camera.setZoomStep(0.2f);
-		setupButtons();
+		setupMenu();
 		setupCreatures();
 		setupCreatureButtons();
 		selectBox = mf.getSelectBox();
@@ -108,7 +109,7 @@ public class PlayState extends State {
 		Gdx.input.setInputProcessor(inputMulti);
 	}
 	
-	private void setupButtons() {
+	private void setupMenu() {
 		
 		decreaseSpeedButton = mf.getTextButton("-");
 		decreaseSpeedButton.addListener(new ClickListener() {
@@ -193,8 +194,9 @@ public class PlayState extends State {
 			@Override
 			public void pan(Vector2 touchPoint, float x, float y, float deltaX, float deltaY) {
 				if(!(touchPoint.x < sideBar.getWidth())) {
-					System.out.println("X:" + camera.position.x + "Y:" + camera.position.y);
-					camera.translate(deltaX/2, deltaY/2);
+//					if(camera.isInBounds()) {
+						camera.translate(deltaX/2, deltaY/2);
+//					}
 				}
 			}
 
