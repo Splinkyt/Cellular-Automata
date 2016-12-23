@@ -6,7 +6,7 @@ public class BoundedCamera extends OrthographicCamera {
 	private float boundLeft, boundBottom;
 	private float boundWidth;
 	private float boundHeight;
-	private float zoomMax = 4.05f;
+	private float zoomMax = 3.05f;
 	private float zoomMin = 0.1f;
 	private float zoomStep = 0.1f;
 	private float viewportWidth = 500f;
