@@ -85,6 +85,11 @@ public class SideBar extends Table {
 			public void panStop(float x, float y, int pointer, int button) {
 				POSITION_TOGGLE = true;
 			}
+
+			@Override
+			public void tap(float x, float y, int count, int button) {
+				
+			}
 		});
 	}
 	

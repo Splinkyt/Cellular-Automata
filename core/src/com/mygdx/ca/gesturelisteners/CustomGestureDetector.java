@@ -72,6 +72,12 @@ public class CustomGestureDetector extends GestureDetector {
 	    	touchPointFlag = true;
 	    	return false;
 	    }
+	    
+	    @Override
+	    public boolean tap(float x, float y, int count, int button) {
+	    	directionListener.tap(x, y, count, button);
+	    	return false;
+	    }
 
 	}
 

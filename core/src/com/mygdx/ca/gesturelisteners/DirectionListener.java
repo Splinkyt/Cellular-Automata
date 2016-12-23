@@ -19,4 +19,6 @@ public interface DirectionListener {
     public void pan(Vector2 touchPoint, float x, float y, float deltaX, float deltaY);
 
 	void panStop(float x, float y, int pointer, int button);
+
+	void tap(float x, float y, int count, int button);
 }

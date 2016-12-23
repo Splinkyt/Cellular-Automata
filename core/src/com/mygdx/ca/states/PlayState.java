@@ -171,11 +171,16 @@ public class PlayState extends State {
 
 			@Override
 			public void longPress(float x, float y) {
+				
+			}
+			
+			@Override
+			public void tap(float x, float y, int count, int button) {
 				int i = ((int)camera.unproject(new Vector3().set(x, y, 0)).x)/10;
 				int j = ((int)camera.unproject(new Vector3().set(x, y, 0)).y)/10;
 				ca.spawnCreature(i, j);
 			}
-
+			
 			@Override
 			public void pinch(Vector2 initialPointer1, Vector2 initialPointer2, Vector2 pointer1, Vector2 pointer2) {
 				
