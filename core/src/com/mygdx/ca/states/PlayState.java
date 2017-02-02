@@ -116,7 +116,7 @@ public class PlayState extends State {
 			@Override
 			public void clicked(InputEvent event, float x, float y) {
 				if(SPEED > SPEED_MIN) {
-					SPEED-=0.5f;
+					SPEED-=1f;
 					updateSpeedometer();
 				}
 				super.clicked(event, x, y);
@@ -129,7 +129,7 @@ public class PlayState extends State {
 			@Override
 			public void clicked(InputEvent event, float x, float y) {
 				if(SPEED < SPEED_MAX) {
-					SPEED+=0.5f;
+					SPEED+=1f;
 					updateSpeedometer();
 				}
 			}
