@@ -9,6 +9,7 @@ import com.mygdx.ca.gesturelisteners.CustomGestureDetector;
 import com.mygdx.ca.gesturelisteners.DirectionListener;
 
 public class SideBar extends Table {
+	
 	private boolean POSITION_TOGGLE = false;
 	private final int VELOCITY = 8;
 	private final int SIZE_X = Gdx.graphics.getWidth()/4;
@@ -95,6 +96,7 @@ public class SideBar extends Table {
 	
 	@Override
 	public void draw(Batch batch, float parentAlpha) {
+		
 		super.draw(batch, parentAlpha);
 		if(POSITION_TOGGLE) {
 			changeTablePosition(VELOCITY);
