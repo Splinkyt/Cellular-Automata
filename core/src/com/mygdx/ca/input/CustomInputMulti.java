@@ -11,6 +11,7 @@ public class CustomInputMulti extends InputMultiplexer {
 		this.camera = camera;
 	}
 	
+	
 	@Override
 	public boolean scrolled(int amount) {
 		
