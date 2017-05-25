@@ -18,9 +18,11 @@ public class CustomInputMulti extends InputMultiplexer {
 		if(camera.zoom > camera.getZoomMin() && camera.zoom < camera.getZoomMax()) {
 			camera.zoom += amount * camera.getZoomStep();
 		}
+		
 		if(camera.zoom < camera.getZoomMin()) {
 			camera.zoom = camera.getZoomMin() + camera.getZoomStep()/2;
 		}
+		
 		else if(camera.zoom > camera.getZoomMax()) {
 			camera.zoom = camera.getZoomMax() - camera.getZoomStep()/2;
 		}
